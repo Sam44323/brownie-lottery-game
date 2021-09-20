@@ -16,8 +16,13 @@ contract Lottery {
     // entering a lottery
     function enter() public payable {}
 
-    // entering a getting the entrance fee
-    function getEntranceFee() public {}
+    // returns the latest price for eth in usd
+    function getEntranceFee() public view returns (uint256) {
+        (, int256 price, , , ) = ethUsdPriceFee.latestRoundData();
+        uint256 adjustedPrice = uint256(price) * (10**10);
+        uint256 costToEnter = (usdEntryFee * (10**18)) / price;
+        return costToEnter;
+    }
 
     // method for starting a lottery(admin)
     function startLottery() public {}
