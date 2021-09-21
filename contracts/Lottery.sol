@@ -6,6 +6,7 @@ import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 contract Lottery {
     uint256 public usdEntryFee;
+    address[] public players;
     AggregatorV3Interface internal ethUsdPriceFee;
 
     constructor(address _priceFeedAddress) public {
@@ -14,7 +15,13 @@ contract Lottery {
     }
 
     // entering a lottery
-    function enter() public payable {}
+    function enter() public payable {
+        require(
+            msg.value >= getEntranceFee(),
+            "Not enought ETH to enter the Lottery!"
+        );
+        players.push(msg.sender);
+    }
 
     // returns the latest price for eth in usd
     function getEntranceFee() public view returns (uint256) {
