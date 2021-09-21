@@ -53,5 +53,11 @@ contract Lottery is Ownable {
     }
 
     // method for ending a lottery(admin)
-    function endLottery() public onlyOwner {}
+    function endLottery() public onlyOwner {
+        require(
+            lottery_state == LOTTERY_STATE.OPEN,
+            "You can end a lottery that's not even started!"
+        );
+        lottery_state = LOTTERY_STATE.CLOSED;
+    }
 }
