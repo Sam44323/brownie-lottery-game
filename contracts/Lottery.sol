@@ -3,8 +3,9 @@
 pragma solidity ^0.6.6;
 
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Lottery {
+contract Lottery is Ownable {
     uint256 public usdEntryFee;
     address[] public players;
     AggregatorV3Interface internal ethUsdPriceFee;
@@ -43,8 +44,14 @@ contract Lottery {
     }
 
     // method for starting a lottery(admin)
-    function startLottery() public {}
+    function startLottery() public onlyOwner {
+        require(
+            lottery_state == LOTTERY_STATE.CLOSED,
+            "The lottery is already open! close it before starting a new one."
+        );
+        lottery_state = LOTTERY_STATE.OPEN;
+    }
 
     // method for ending a lottery(admin)
-    function endLottery() public {}
+    function endLottery() public onlyOwner {}
 }
