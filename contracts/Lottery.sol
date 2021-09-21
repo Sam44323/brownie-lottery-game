@@ -43,9 +43,7 @@ contract Lottery {
     }
 
     // method for starting a lottery(admin)
-    function startLottery() public {
-        require(lottery_state == LOTTERY_STATE.CLOSED);
-    }
+    function startLottery() public {}
 
     // method for ending a lottery(admin)
     function endLottery() public {}
