@@ -1,8 +1,9 @@
-from brownie import Lottery, accounts, network
+from brownie import Lottery
+from helpful_scripts import get_account
 
 
 def deploy_lottery():
-    account = accounts[0]
+    account = get_account()
     print(account)
 
 
