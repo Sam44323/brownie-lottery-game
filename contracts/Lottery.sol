@@ -10,6 +10,8 @@ contract Lottery is Ownable, VRFConsumerBase {
     uint256 public usdEntryFee;
     address[] public players;
     AggregatorV3Interface internal ethUsdPriceFee;
+    bytes32 public keyhash;
+    uint256 public fee;
 
     // declaring a state of type LOTTERY_STATE
     enum LOTTERY_STATE {
@@ -23,11 +25,15 @@ contract Lottery is Ownable, VRFConsumerBase {
     constructor(
         address _priceFeedAddress,
         address _vrfCoordinator,
-        address _link
+        address _link,
+        uint256 _fee,
+        bytes32 _keyhash
     ) public VRFConsumerBase(_vrfCoordinator, _link) {
         usdEntryFee = 50 * (10**18); // storing the entry whenever  we initilized an instance of the contract
         ethUsdPriceFee = AggregatorV3Interface(_priceFeedAddress);
         lottery_state = LOTTERY_STATE.CLOSED;
+        fee = _fee;
+        keyhash = _keyhash;
     }
 
     // entering a lottery
@@ -58,11 +64,16 @@ contract Lottery is Ownable, VRFConsumerBase {
     }
 
     // method for ending a lottery(admin)
+    // we'll call this one
     function endLottery() public onlyOwner {
         require(
             lottery_state == LOTTERY_STATE.OPEN,
             "You can end a lottery that's not even started!"
         );
         lottery_state = LOTTERY_STATE.CALCULATING_WINNER;
+        bytes32 requestId = requestRandomness(keyhash, fee);
     }
+
+    // once the chainlink node has created a provely random number then it's going to call this function
+    // for a transaction
 }
