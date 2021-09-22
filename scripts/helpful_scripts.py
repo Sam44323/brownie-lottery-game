@@ -6,7 +6,7 @@ FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
 
 def get_account(index=None, id=None):
     if id:
-        return accounts.load(index)
+        return accounts.load(id)
     elif index:
         return accounts[index]
     elif(network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS or network.show_active() in FORKED_LOCAL_ENVIRONMENTS):
