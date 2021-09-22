@@ -75,5 +75,5 @@ contract Lottery is Ownable, VRFConsumerBase {
     }
 
     // once the chainlink node has created a provely random number then it's going to call this function
-    // for a transaction
+    // for the transaction
 }
