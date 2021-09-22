@@ -2,4 +2,4 @@ from brownie import accounts, network
 
 
 def get_account():
-    pass
+    return accounts[0]
