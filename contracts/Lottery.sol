@@ -8,8 +8,8 @@ import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 
 contract Lottery is Ownable, VRFConsumerBase {
     uint256 public usdEntryFee;
-    address[] public players;
-    address public recentWinner;
+    address payable[] public players;
+    address payable public recentWinner;
     uint256 public randomness;
     AggregatorV3Interface internal ethUsdPriceFee;
     bytes32 public keyhash;
