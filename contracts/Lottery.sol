@@ -76,4 +76,14 @@ contract Lottery is Ownable, VRFConsumerBase {
 
     // once the chainlink node has created a provely random number then it's going to call this function
     // for the transaction
+    function fulfillRandomness(bytes32 _reuqestId, uint256 _randomness)
+        internal
+        override
+    {
+        require(
+            lottery_state == LOTTERY_STATE.CALCULATING_WINNER,
+            "You aren't there yet!"
+        );
+        require(_randomness > 0, "random not found!");
+    }
 }
