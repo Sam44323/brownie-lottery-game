@@ -4,8 +4,9 @@ pragma solidity ^0.6.6;
 
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 
-contract Lottery is Ownable {
+contract Lottery is Ownable, VRFConsumerBase {
     uint256 public usdEntryFee;
     address[] public players;
     AggregatorV3Interface internal ethUsdPriceFee;
@@ -19,7 +20,11 @@ contract Lottery is Ownable {
 
     LOTTERY_STATE public lottery_state;
 
-    constructor(address _priceFeedAddress) public {
+    constructor(
+        address _priceFeedAddress,
+        address _vrfCoordinator,
+        address _link
+    ) public VRFConsumerBase(_vrfCoordinator, _link) {
         usdEntryFee = 50 * (10**18); // storing the entry whenever  we initilized an instance of the contract
         ethUsdPriceFee = AggregatorV3Interface(_priceFeedAddress);
         lottery_state = LOTTERY_STATE.CLOSED;
@@ -58,6 +63,6 @@ contract Lottery is Ownable {
             lottery_state == LOTTERY_STATE.OPEN,
             "You can end a lottery that's not even started!"
         );
-        lottery_state = LOTTERY_STATE.CLOSED;
+        lottery_state = LOTTERY_STATE.CALCULATING_WINNER;
     }
 }
