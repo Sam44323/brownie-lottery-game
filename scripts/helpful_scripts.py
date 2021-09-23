@@ -9,6 +9,7 @@ def get_account(index=None, id=None):
         # returns the account with the id stored in brownie
         return accounts.load(id)
     elif index:
+        # returning a particular account from the accounts array
         return accounts[index]
     elif(network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS or network.show_active() in FORKED_LOCAL_ENVIRONMENTS):
         return accounts[0]
