@@ -1,4 +1,4 @@
-from brownie import accounts, network, config, Contract, MockV3Aggregator, VRFCoordinatorMock
+from brownie import accounts, network, config, Contract, MockV3Aggregator, VRFCoordinatorMock, LinkToken
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
@@ -29,6 +29,7 @@ def get_account(index=None, id=None):
 contract_to_mock = {
     "eth_usd_price_feed": MockV3Aggregator,
     "vrf_coordinator": VRFCoordinatorMock,
+    "link_token": LinkToken
 }
 
 

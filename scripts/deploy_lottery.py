@@ -9,6 +9,8 @@ def deploy_lottery():
             "eth_usd_price_feed").address,
         get_contract(
             "vrf_coordinator").address,
+        get_contract(
+            "link_token").address,
     )
 
 
