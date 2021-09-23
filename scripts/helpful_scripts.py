@@ -2,6 +2,15 @@ from brownie import accounts, network, config
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
+DECIMALS = 8
+INITIAL_VALUE = 200000000000
+
+
+def deploy_mocks(decimal=DECIMALS, initial_value=INITIAL_VALUE):
+    account = get_account()
+    mock_price_feed_contract = MockV3Aggregator.deploy(
+        decimal, initial_value, {"from": account})
+    print("Deployed!")
 
 
 def get_account(index=None, id=None):
@@ -17,7 +26,12 @@ def get_account(index=None, id=None):
     return accounts.add(config["wallets"]["from_key"])
 
 
-def get_contract():
+contract_to_mock = {
+    "eth_usd_price_feed": MockV3Aggregator,
+}
+
+
+def get_contract(contract_name):
     """
     This function will grab the contract addresses from the brownie config if defined, otherwise, it will deploy a mock version of that contract and return that mock address
 
@@ -26,3 +40,9 @@ def get_contract():
     Return:
         brownie.network.contract.ProjectContract: The most recently deployed version of this contract.
     """
+    contract_type = contract_to_mock[contract_name]
+    if network.show_active in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+        if len(contract_type) <= 0:
+            deploy_mocks()
+        # getting the latest deployed contract for that type
+        contract = contract_type[-1]
