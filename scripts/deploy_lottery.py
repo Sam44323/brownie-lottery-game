@@ -15,7 +15,7 @@ def deploy_lottery():
         config["networks"][network.show_active()]["keyhash"],
         {"from": account},
         publish_source=config["networks"][network.show_active()].get(
-            "verify", False)  # if verify key is not there then return false
+            "verify", False)  # if verify key is not there then set it to false
     )
 
 
