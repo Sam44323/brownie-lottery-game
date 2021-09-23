@@ -11,6 +11,11 @@ def deploy_lottery():
             "vrf_coordinator").address,
         get_contract(
             "link_token").address,
+        config["networks"][network.show_active()]["fee"],
+        config["networks"][network.show_active()]["keyhash"],
+        {"from": account},
+        publish_source=config["networks"][network.show_active()].get(
+            "verify", False)  # if verify key is not there then return false
     )
 
 
