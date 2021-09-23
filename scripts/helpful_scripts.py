@@ -1,4 +1,4 @@
-from brownie import accounts, network, config
+from brownie import accounts, network, config, Contract
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
@@ -46,3 +46,10 @@ def get_contract(contract_name):
             deploy_mocks()
         # getting the latest deployed contract for that type
         contract = contract_type[-1]
+    else:
+        contract_address = config["networks"][network.show_active(
+        )]["eth_usd_price_feed"]
+        # getting a deployed contract from the abi
+        contract = Contract.from_abi(
+            contract_type._name, contract_address, contract_type.abi)
+    return contract
