@@ -17,6 +17,7 @@ def deploy_lottery():
         publish_source=config["networks"][network.show_active()].get(
             "verify", False)  # if verify key is not there then set it to false
     )
+    print(f"Deployed the lottery! {lottery.address}")
 
 
 def main():
