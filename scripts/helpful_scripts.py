@@ -13,4 +13,5 @@ def get_account(index=None, id=None):
         return accounts[index]
     elif(network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS or network.show_active() in FORKED_LOCAL_ENVIRONMENTS):
         return accounts[0]
+    # returning the account derived from the key
     return accounts.add(config["wallets"]["from_key"])
