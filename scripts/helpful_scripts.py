@@ -18,4 +18,11 @@ def get_account(index=None, id=None):
 
 
 def get_contract():
-    pass
+    """
+    This function will grab the contract addresses from the brownie config if defined, otherwise, it will deploy a mock version of that contract and return that mock address
+
+    Args:
+        contract_name: (string)
+    Return:
+        brownie.network.contract.ProjectContract: The most recently deployed version of this contract.
+    """
