@@ -15,3 +15,7 @@ def get_account(index=None, id=None):
         return accounts[0]
     # returning the account derived from the key
     return accounts.add(config["wallets"]["from_key"])
+
+
+def get_contract():
+    pass
