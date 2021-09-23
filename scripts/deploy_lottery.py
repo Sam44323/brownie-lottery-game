@@ -7,8 +7,10 @@ def deploy_lottery():
     lottery = Lottery.deploy(
         get_contract(
             "eth_usd_price_feed").address,
-        config["networks"][network.show_active()]["vrf_coordinator"],
-        config["networks"][network.show_active()]["eth_usd_price_feed"],
+        get_contract(
+            "vrf_coordinator").address,
+        get_contract(
+            "eth_usd_price_feed").address,
     )
 
 
