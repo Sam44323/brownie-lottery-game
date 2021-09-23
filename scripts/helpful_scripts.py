@@ -6,6 +6,7 @@ FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
 
 def get_account(index=None, id=None):
     if id:
+        # returns the account with the id stored in brownie
         return accounts.load(id)
     elif index:
         return accounts[index]
