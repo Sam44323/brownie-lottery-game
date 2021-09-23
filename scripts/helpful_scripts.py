@@ -1,4 +1,4 @@
-from brownie import accounts, network, config, Contract
+from brownie import accounts, network, config, Contract, MockV3Aggregator
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
@@ -8,7 +8,7 @@ INITIAL_VALUE = 200000000000
 
 def deploy_mocks(decimal=DECIMALS, initial_value=INITIAL_VALUE):
     account = get_account()
-    mock_price_feed_contract = MockV3Aggregator.deploy(
+    MockV3Aggregator.deploy(
         decimal, initial_value, {"from": account})
     print("Deployed!")
 
