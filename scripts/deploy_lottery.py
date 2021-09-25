@@ -26,7 +26,7 @@ def start_lottery():
     start_tx = lottery.startLottery({
         "from": account
     })
-    start_tx.wait(1)
+    start_tx.wait(1)  # waiting for the transaction to complete
     print("The lottery is open!")
 
 
