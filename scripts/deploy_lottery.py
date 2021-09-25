@@ -42,7 +42,12 @@ def enter_lottery():
     print("Entered the lottery!")
 
 
+def end_lottery():
+    pass
+
+
 def main():
     deploy_lottery()
     start_lottery()
     enter_lottery()
+    end_lottery()
