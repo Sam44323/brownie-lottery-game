@@ -74,6 +74,8 @@ def fund_with_links(contract_address, account=None, link_token=None, amount=1000
     account = account if account else get_account()
     link_token = link_token if link_token else get_contract(
         "link_token")
+    # transfering some tokens to another contract address from link token contract
     txs = link_token.transfer(contract_address, amount, {"from": account})
     txs.wait(1)
     print("Funded the contract with links!")
+    return txs
