@@ -4,7 +4,7 @@ from scripts.helpful_scripts import get_account, get_contract
 
 def deploy_lottery():
     account = get_account()
-    lottery = Lottery.deploy(
+    Lottery.deploy(
         get_contract(
             "eth_usd_price_feed").address,
         get_contract(
@@ -17,7 +17,7 @@ def deploy_lottery():
         publish_source=config["networks"][network.show_active()].get(
             "verify", False)  # if verify key is not there then set it to false
     )
-    print(f"Deployed the lottery! {lottery.address}")
+    print("Deployed the lottery!")
 
 
 def main():
