@@ -20,5 +20,9 @@ def deploy_lottery():
     print("Deployed the lottery!")
 
 
+def start_lottery():
+    pass
+
+
 def main():
     deploy_lottery()
