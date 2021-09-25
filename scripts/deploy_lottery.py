@@ -43,7 +43,12 @@ def enter_lottery():
 
 
 def end_lottery():
-    pass
+    account = get_account()
+    lottery = Lottery[-1]
+    # funding the contract with link and then ending the lottery
+    transaction = lottery.endLottery({
+        "from": account
+    })
 
 
 def main():
