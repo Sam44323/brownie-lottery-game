@@ -6,6 +6,7 @@ from brownie import (
     VRFCoordinatorMock,
     LinkToken,
     Contract,
+    interface
 )
 
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
@@ -75,7 +76,10 @@ def fund_with_links(contract_address, account=None, link_token=None, amount=1000
     link_token = link_token if link_token else get_contract(
         "link_token")
     # transfering some tokens to another contract address from link token contract
-    txs = link_token.transfer(contract_address, amount, {"from": account})
+    link_token_contract = interface.LinkTokenInterface(
+        link_token.address)  # getting the contract from the interface
+    txs = link_token_contract.transfer(
+        contract_address, amount, {"from": account})
     txs.wait(1)
     print("Funded the contract with links!")
     return txs
