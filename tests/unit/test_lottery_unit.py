@@ -2,7 +2,6 @@ from brownie import network
 from scripts.deploy_lottery import deploy_lottery
 from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS
 from web3 import Web3
-import time
 import pytest
 
 
