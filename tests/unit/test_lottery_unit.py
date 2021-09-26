@@ -33,4 +33,16 @@ def test_cant_enter_unless_started():
 
 def test_can_start_and_enter_lottery():
     network_checker()
+    account = get_account()
     lottery = deploy_lottery()
+    start_tx = lottery.startLottery({
+        "from": account
+    })
+    start_tx.wait(1)  # waiting for the transaction to complete
+    value = lottery.getEntranceFee() + 100000000
+    transact = lottery.enter({
+        "from": account,
+        "value": value
+    })
+    transact.wait(1)
+    assert lottery.players(0) == account
