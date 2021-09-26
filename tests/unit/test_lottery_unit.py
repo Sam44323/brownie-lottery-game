@@ -29,3 +29,8 @@ def test_cant_enter_unless_started():
             "from": get_account(),
             "value": lottery.getEntranceFee()
         })
+
+
+def test_can_start_and_enter_lottery():
+    network_checker()
+    lottery = deploy_lottery()
