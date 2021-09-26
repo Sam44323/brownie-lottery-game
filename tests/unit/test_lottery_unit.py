@@ -77,6 +77,8 @@ def test_can_pick_winner_correctly():
     # calling the function posing as a vrf node with that request id value
     get_contract(
         "vrf_coordinator").callBackWithRandomness(request_id, STATIC_RNG, lottery.address, {"from": account})
-    starting_balance = account.balance
+    starting_balance = account.balance()
+    lottery_balance = lottery.balance()
     assert lottery.recentWinner() == account
     assert lottery.balance() == 0
+    assert account.balance() == starting_balance + lottery_balance
