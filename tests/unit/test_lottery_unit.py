@@ -5,9 +5,15 @@ from web3 import Web3
 import pytest
 
 
-def test_get_entrance_fee():
+def network_checker():
     if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         pytest.skip()
+    else:
+        return
+
+
+def test_get_entrance_fee():
+    network_checker()
     lottery = deploy_lottery()
     expected_entrance_fee = Web3.toWei(0.025, 'ether')
     entranceFee = lottery.getEntranceFee()
@@ -15,4 +21,4 @@ def test_get_entrance_fee():
 
 
 def test_cant_enter_unless_started():
-    pass
+    network_checker()
