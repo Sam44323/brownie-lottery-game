@@ -63,3 +63,11 @@ def test_can_pick_winner_correctly():
     network_checker()
     account = get_account()
     lottery = deploy_lottery()
+    lottery.startLottery({"from": account})
+    lottery.enter({"from": account, "value": lottery.getEntranceFee()})
+    lottery.enter({"from": get_account(index=1),
+                  "value": lottery.getEntranceFee()})
+    lottery.enter({"from": get_account(index=2),
+                  "value": lottery.getEntranceFee()})
+    fund_with_links(lottery)
+    lottery.endLottery({"from": account})
