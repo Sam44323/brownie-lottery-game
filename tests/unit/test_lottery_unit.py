@@ -1,6 +1,7 @@
-from brownie import network
+from _pytest.config import exceptions
+from brownie import network, reverts
 from scripts.deploy_lottery import deploy_lottery
-from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS
+from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS, get_account
 from web3 import Web3
 import pytest
 
@@ -22,3 +23,9 @@ def test_get_entrance_fee():
 
 def test_cant_enter_unless_started():
     network_checker()
+    lottery = deploy_lottery()
+    with reverts("Lottery is not open yet!"):
+        lottery.enter({
+            "from": get_account(),
+            "value": lottery.getEntranceFee()
+        })
