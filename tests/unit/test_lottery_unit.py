@@ -1,7 +1,7 @@
 from _pytest.config import exceptions
 from brownie import network, reverts
 from scripts.deploy_lottery import deploy_lottery
-from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS, get_account
+from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS, get_account, fund_with_links
 from web3 import Web3
 import pytest
 
@@ -51,3 +51,9 @@ def test_can_start_and_enter_lottery():
 def test_can_end_lottery():
     network_checker()
     lottery = deploy_lottery()
+    account = get_account()
+    lottery.startLottery({"from": account})
+    lottery.enter({"from": account, "value": lottery.getEntranceFee()})
+    fund_with_links(lottery)
+    lottery.endLottery({"from": account})
+    assert lottery.lottery_state() == 2
