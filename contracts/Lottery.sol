@@ -40,7 +40,10 @@ contract Lottery is Ownable, VRFConsumerBase {
 
     // entering a lottery
     function enter() public payable {
-        require(lottery_state == LOTTERY_STATE.OPEN);
+        require(
+            lottery_state == LOTTERY_STATE.OPEN,
+            "Lottery is not open yet!"
+        );
         require(
             msg.value >= getEntranceFee(),
             "Not enought ETH to enter the Lottery!"

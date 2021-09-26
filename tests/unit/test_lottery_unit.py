@@ -13,3 +13,7 @@ def test_get_entrance_fee():
     expected_entrance_fee = Web3.toWei(0.025, 'ether')
     entranceFee = lottery.getEntranceFee()
     assert expected_entrance_fee == entranceFee
+
+
+def test_cant_enter_unless_started():
+    pass
