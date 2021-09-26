@@ -46,3 +46,8 @@ def test_can_start_and_enter_lottery():
     })
     transact.wait(1)
     assert lottery.players(0) == account
+
+
+def test_can_end_lottery():
+    network_checker()
+    lottery = deploy_lottery()
