@@ -5,7 +5,7 @@ import time
 
 def deploy_lottery():
     account = get_account()
-    Lottery.deploy(
+    lottery = Lottery.deploy(
         get_contract(
             "eth_usd_price_feed").address,
         get_contract(
@@ -19,6 +19,7 @@ def deploy_lottery():
             "verify", False)  # if verify key is not there then set it to false
     )
     print("Deployed the lottery!")
+    return lottery
 
 
 def start_lottery():
