@@ -71,8 +71,10 @@ def test_can_pick_winner_correctly():
                   "value": lottery.getEntranceFee()})
     fund_with_links(lottery)
     transaction = lottery.endLottery({"from": account})
+    # getting the request id for the contract
     request_id = transaction.events["RequestRandomness"]["requestId"]
     STATIC_RNG = 777
+    # calling the function posing as a vrf node with that request id value
     get_contract(
         "vrf_coordinator").callBackWithRandomness(request_id, STATIC_RNG, lottery.address, {"from": account})
     assert lottery.recentWinner() == account
