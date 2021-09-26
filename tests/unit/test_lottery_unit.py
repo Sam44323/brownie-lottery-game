@@ -1,7 +1,7 @@
 from _pytest.config import exceptions
 from brownie import network, reverts
 from scripts.deploy_lottery import deploy_lottery
-from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS, get_account, fund_with_links
+from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS, get_account, fund_with_links, get_contract
 from web3 import Web3
 import pytest
 
@@ -70,4 +70,9 @@ def test_can_pick_winner_correctly():
     lottery.enter({"from": get_account(index=2),
                   "value": lottery.getEntranceFee()})
     fund_with_links(lottery)
-    lottery.endLottery({"from": account})
+    transaction = lottery.endLottery({"from": account})
+    request_id = transaction.events["RequestRandomness"]["requestId"]
+    STATIC_RNG = 777
+    get_contract(
+        "vrf_coordinator").callBackWithRandomness(request_id, STATIC_RNG, lottery.address, {"from": account})
+    assert lottery.recentWinner() == account
