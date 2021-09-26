@@ -57,3 +57,9 @@ def test_can_end_lottery():
     fund_with_links(lottery)
     lottery.endLottery({"from": account})
     assert lottery.lottery_state() == 2
+
+
+def test_can_pick_winner_correctly():
+    network_checker()
+    account = get_account()
+    lottery = deploy_lottery()
