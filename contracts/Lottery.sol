@@ -14,6 +14,7 @@ contract Lottery is Ownable, VRFConsumerBase {
     AggregatorV3Interface internal ethUsdPriceFee;
     bytes32 public keyhash;
     uint256 public fee;
+    event RequestRandomness(bytes32 requestId);
 
     // declaring a state of type LOTTERY_STATE
     enum LOTTERY_STATE {
@@ -77,6 +78,7 @@ contract Lottery is Ownable, VRFConsumerBase {
         );
         lottery_state = LOTTERY_STATE.CALCULATING_WINNER;
         bytes32 requestId = requestRandomness(keyhash, fee);
+        emit RequestRandomness(requestId);
     }
 
     // once the chainlink node has created a provely random number then it's going to call this function
