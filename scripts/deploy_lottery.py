@@ -22,44 +22,5 @@ def deploy_lottery():
     return lottery
 
 
-def start_lottery():
-    account = get_account()
-    lottery = Lottery[-1]
-    start_tx = lottery.startLottery({
-        "from": account
-    })
-    start_tx.wait(1)  # waiting for the transaction to complete
-    print("The lottery is open!")
-
-
-def enter_lottery():
-    account = get_account()
-    lottery = Lottery[-1]
-    value = lottery.getEntranceFee() + 100000000
-    transact = lottery.enter({
-        "from": account,
-        "value": value
-    })
-    transact.wait(1)
-    print("Entered the lottery!")
-
-
-def end_lottery():
-    account = get_account()
-    lottery = Lottery[-1]
-    # funding the contract with link and then ending the lottery
-    transaction = fund_with_links(contract_address=lottery.address)
-    transaction.wait(1)
-    transaction = lottery.endLottery({
-        "from": account
-    })
-    transaction.wait(1)
-    time.sleep(58)
-    print(f"{lottery.recentWinner()} is the new winner!")
-
-
 def main():
     deploy_lottery()
-    start_lottery()
-    enter_lottery()
-    end_lottery()
